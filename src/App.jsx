@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { login, logout, register, getCurrentUser, isAuthenticated } from './services/authService'
 import LoginForm from './components/LoginForm'
+import RegisterForm from './components/RegisterForm'
 import './styles/App.css'
 
 function App() {
@@ -13,9 +16,15 @@ function App() {
 
   return (
     <>
-      <div className='container'>
-        {!loggedIn ? <LoginForm onLoginSuccess={handleLoginSuccess} /> : <h1>Welcome to the app!</h1>}
-      </div>
+      <Router>
+      <nav>
+        <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
+      </nav>
+      <Routes>
+        <Route path="/register" element={<RegisterForm />} />
+        <Route path="/login" element={<LoginForm />} />
+      </Routes>
+    </Router>
     </>
   )
 }
