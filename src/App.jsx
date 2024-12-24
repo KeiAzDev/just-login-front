@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { login, logout, register, getCurrentUser, isAuthenticated } from './services/authService'
 import LoginForm from './components/login/LoginForm'
 import RegisterForm from './components/login/RegisterForm'
+import Home from './components/home/Home'
 import './styles/App.css'
 
 
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/register" element={<RegisterForm />} />
         <Route path="/login" element={<LoginForm />} />
+        <Route path="/home" element={<Home />} />
       </Routes>
     </Router>
     </>
