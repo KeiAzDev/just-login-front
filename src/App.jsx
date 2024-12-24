@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { login, logout, register, getCurrentUser, isAuthenticated } from './services/authService'
-import LoginForm from './components/LoginForm'
-import RegisterForm from './components/RegisterForm'
+import LoginForm from './components/login/LoginForm'
+import RegisterForm from './components/login/RegisterForm'
 import './styles/App.css'
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
