@@ -9,27 +9,39 @@ import './styles/App.css'
 
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false);
 
-  const handleLoginSuccess = (data) => {
-    console.log('Login successful:', data.message)
-    setLoggedIn(true)
-  }
+  // アプリケーション起動時に認証状態をチェック
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await isAuthenticated();
+        setLoggedIn(response.authenticated);
+      } catch (error) {
+        console.error('認証チェックに失敗しました:', error);
+        setLoggedIn(false);
+      }
+    };
+    checkAuth();
+  }, []);
+
+  // ログイン状態を更新する関数
+  const updateAuthStatus = (status) => {
+    setLoggedIn(status);
+  };
 
   return (
-    <>
-      <Router>
+    <Router>
       <nav>
         <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
       </nav>
       <Routes>
-        <Route path="/register" element={<RegisterForm />} />
-        <Route path="/login" element={<LoginForm />} />
+        <Route path="/register" element={<RegisterForm onAuthUpdate={updateAuthStatus} />} />
+        <Route path="/login" element={<LoginForm onAuthUpdate={updateAuthStatus} />} />
         <Route path="/home" element={<Home />} />
       </Routes>
     </Router>
-    </>
-  )
+  );
 }
 
-export default App
+export default App;
