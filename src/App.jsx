@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import { login, logout, register, getCurrentUser, isAuthenticated } from './services/authService'
 import LoginForm from './components/login/LoginForm'
 import RegisterForm from './components/login/RegisterForm'
 import Home from './components/home/Home'
+import PublicRoute from './components/routes/publicRoute.jsx'
 import './styles/App.css'
 
 
@@ -36,9 +37,25 @@ function App() {
         <Link to="/register">Register</Link> | <Link to="/login">Login</Link>
       </nav>
       <Routes>
-        <Route path="/register" element={<RegisterForm onAuthUpdate={updateAuthStatus} />} />
-        <Route path="/login" element={<LoginForm onAuthUpdate={updateAuthStatus} />} />
+        <Route 
+          path="/register" 
+          element={
+            <PublicRoute>
+              <RegisterForm />
+            </PublicRoute>
+          } 
+        />
+        <Route 
+          path="/login" 
+          element={
+            <PublicRoute>
+              <LoginForm />
+            </PublicRoute>
+          } 
+        />
         <Route path="/home" element={<Home />} />
+        {/* ルートパスのリダイレクト */}
+        <Route path="/" element={<Navigate to="/home" replace />} />
       </Routes>
     </Router>
   );
